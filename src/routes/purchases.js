@@ -56,7 +56,6 @@ router.post('/', async (req, res) => {
 
       await conn.commit();
       res.status(201).json({ id: purchaseId, message: 'Purchase created' });
-      //
       res.status(201).json({ id: purchaseId, message: subtotal });
     } catch (err) {
       await conn.rollback();
@@ -217,7 +216,7 @@ router.get('/', async (req, res) => {
         total: Number(r.total),
         status: r.status,
         purchase_date: r.purchase_date,
-        details: details.filter(d => d.purchase_id === r.id).map(d => ({
+        details: drows.map(d => ({
           id: d.id,
           product: d.product,
           quantity: d.quantity,
@@ -225,7 +224,6 @@ router.get('/', async (req, res) => {
           subtotal: Number(d.subtotal)
         }))
       }));
-
       res.json(result);
     } finally {
       conn.release();
