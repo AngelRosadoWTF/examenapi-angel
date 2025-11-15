@@ -56,6 +56,8 @@ router.post('/', async (req, res) => {
 
       await conn.commit();
       res.status(201).json({ id: purchaseId, message: 'Purchase created' });
+      //
+      res.status(201).json({ id: purchaseId, message: subtotal });
     } catch (err) {
       await conn.rollback();
       throw err;
